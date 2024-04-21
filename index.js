@@ -12,7 +12,10 @@ const middleware = (req, res, next) => {
     console.log(`hello middleware`);
     next();
 }
-
+app.use(middleware);
+app.get('/', (req, res) => {
+    res.send('hello server');
+})
 const start = async () => {
     try {
         app.listen(PORT, () => {

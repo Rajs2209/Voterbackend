@@ -5,8 +5,8 @@ const Certificateschems = require("../schema/cschema");
 const Voterschema = require("../schema/vschema");
 var ObjectId = require('mongodb').ObjectId;
 
-router.post('/', (req, res, next) => {
-    req.send('hello server');
+router.post('/', (req, res) => {
+    res.send('hello server');
 });
 
 
