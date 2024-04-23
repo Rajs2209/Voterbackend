@@ -12,22 +12,28 @@ router.post('/', (req, res) => {
 
 router.post('/submit-form', async (req, res) => {
     const Data = req.body;
-    console.log(Data);
     try {
         const existingData = await Voterschema.findOne({ name: Data.name, phone: Data.phone });
         console.log(existingData);
         if (!existingData) {
             await Voterschema.create(Data);
-            await Certificateschems.findOneAndUpdate({ option: Data.option }, { $inc: { count: 1 } }, { upsert: true });
+            const optionCount = await Certificateschems.findOne({ option: Data.option });
+            if (optionCount) {
+                await Certificateschems.findOneAndUpdate({ option: Data.option }, { $inc: { count: 1 } });
+            } else {
+                await Certificateschems.create({ option: Data.option, count: 1 });
+            }
             res.sendStatus(200);
         } else {
-            res.status(400).send({ message: 'Name and phone number combination already exists.' });
+            res.status(200).send({ message: 'User already exists' });
         }
     } catch (err) {
         console.error(err);
         res.status(500).send('Error occurred while submitting form data');
     }
 });
+
+
 
 
 
