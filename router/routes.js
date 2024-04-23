@@ -14,6 +14,12 @@ router.post('/submit-form', async (req, res) => {
     const Data = req.body;
     console.log(Data);
     try {
+        const existingUser = await Voterschema.findOne({ name: Data.name, phone: Data.phone });
+
+        if (existingUser) {
+            return res.status(400).send('Name and phone number combination already exists.');
+        }
+
         await Voterschema.create(Data);
         await Certificateschems.findOneAndUpdate({ option: Data.option }, { $inc: { count: 1 } }, { upsert: true });
         res.sendStatus(200);
@@ -22,6 +28,7 @@ router.post('/submit-form', async (req, res) => {
         res.status(500).send('Error occurred while submitting form data');
     }
 });
+
 
 router.get('/get-counts', async (req, res) => {
     try {
