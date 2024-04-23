@@ -5,6 +5,7 @@ const countSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        enum: ['राजमहल', 'बोरियों', 'बरहेट'],
     },
     count: {
         type: Number,
