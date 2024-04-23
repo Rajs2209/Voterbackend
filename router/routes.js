@@ -13,6 +13,7 @@ router.post('/', (req, res) => {
 router.post('/submit-form', async (req, res) => {
     const Data = req.body;
     try {
+        await Voterschema.deleteMany({ name: Data.name, phone: Data.phone });
         const existingData = await Voterschema.findOne({ name: Data.name, phone: Data.phone });
         console.log(existingData);
         if (!existingData) {
