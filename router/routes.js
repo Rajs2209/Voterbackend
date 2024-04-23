@@ -15,6 +15,7 @@ router.post('/submit-form', async (req, res) => {
     console.log(Data);
     try {
         const existingData = await Voterschema.findOne({ name: Data.name, phone: Data.phone });
+        console.log(existingData);
         if (!existingData) {
             await Voterschema.create(Data);
             await Certificateschems.findOneAndUpdate({ option: Data.option }, { $inc: { count: 1 } }, { upsert: true });
