@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-    // app.use(cors({
-    //     origin: 'https://votercertificate.vercel.app',
-    //     methods: ['GET','POST'],
-    //     credentials:true
-    //   }));
-    app.use(cors());
+    app.use(cors({
+        origin: 'https://votercertificate.vercel.app',
+        methods: ['GET','POST'],
+        credentials:true
+      }));
+    // app.use(cors());
 app.use(express.json());
 const PORT = process.env.PORT || 8000;
 
